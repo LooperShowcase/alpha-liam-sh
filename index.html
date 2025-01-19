@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Pizza</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ff6347;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            font-size: 18px;
+            margin: 10px 0 5px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .button {
+            background-color: #ff6347;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #e5533e;
+        }
+        .order-summary {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .order-summary p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+  <ul>
+    <li><a class="active" href="index.html">Home</a></li>
+    <li><a href="Hisotry.html">History</a></li>
+    <li><a href="concact.html">Contact</a></li>
+    <li><a href="About.html">About</a></li>
+</ul>
+
+    <header>
+        <h1>Create Your Own Pizza</h1>
+        <p>Customize your pizza and place your order!</p>
+    </header>
+
+    <div class="container">
+        <form id="pizzaForm">
+
+            <!-- Choose Pizza Size -->
+            <div class="section">
+                <h2>Choose Pizza Size</h2>
+                <label><input type="radio" name="size" value="Small" required> Small</label>
+                <label><input type="radio" name="size" value="Medium"> Medium</label>
+                <label><input type="radio" name="size" value="Large"> Large</label>
+            </div>
+
+            <!-- Select Sauce -->
+            <div class="section">
+                <h2>Select Sauce</h2>
+                <label><input type="checkbox" name="sauce" value="Tomato Sauce"> Tomato Sauce</label>
+                <label><input type="checkbox" name="sauce" value="Alfredo Sauce"> Alfredo Sauce</label>
+                <label><input type="checkbox" name="sauce" value="Barbecue Sauce"> Barbecue Sauce</label>
+                <label><input type="checkbox" name="sauce" value="Pesto Sauce"> Pesto Sauce</label>
+            </div>
+
+            <!-- Select Toppings -->
+            <div class="section">
+                <h2>Select Toppings</h2>
+                <label><input type="checkbox" name="toppings" value="Pepperoni"> Pepperoni</label>
+                <label><input type="checkbox" name="toppings" value="Mushrooms"> Mushrooms</label>
+                <label><input type="checkbox" name="toppings" value="Onions"> Onions</label>
+                <label><input type="checkbox" name="toppings" value="Green Peppers"> Green Peppers</label>
+                <label><input type="checkbox" name="toppings" value="Olives"> Olives</label>
+                <label><input type="checkbox" name="toppings" value="Bacon"> Bacon</label>
+                <label><input type="checkbox" name="toppings" value="Chicken"> Chicken</label>
+                <label><input type="checkbox" name="toppings" value="Pineapple"> Pineapple</label>
+            </div>
+
+            <!-- Choose Additional Options -->
+            <div class="section">
+                <h2>Additional Options</h2>
+                <label><input type="checkbox" name="extraCheese" value="Extra Cheese"> Extra Cheese</label>
+                <label><input type="checkbox" name="garlicCrust" value="Garlic Crust"> Garlic Crust</label>
+            </div>
+
+            <!-- Place Order Button -->
+            <div>
+                <button type="button" class="button" onclick="generateOrderSummary()">Place Order</button>
+            </div>
+        </form>
+
+        <div class="order-summary" id="orderSummary" style="display: none;">
+            <h2>Order Summary</h2>
+            <p><strong>Size:</strong> <span id="summarySize"></span></p>
+            <p><strong>Sauce:</strong> <span id="summarySauce"></span></p>
+            <p><strong>Toppings:</strong> <span id="summaryToppings"></span></p>
+            <p><strong>Additional Options:</strong> <span id="summaryOptions"></span></p>
+        </div>
+    </div>
+
+    <script>
+        function generateOrderSummary() {
+            var form = document.forms['pizzaForm'];
+            var size = form['size'].value;
+            var sauces = Array.from(form['sauce'])
+                               .filter(sauce => sauce.checked)
+                               .map(sauce => sauce.value);
+            var toppings = Array.from(form['toppings'])
+                                 .filter(topping => topping.checked)
+                                 .map(topping => topping.value);
+            var options = [];
+            if (form['extraCheese'].checked) options.push('Extra Cheese');
+            if (form['garlicCrust'].checked) options.push('Garlic Crust');
+
+            document.getElementById('summarySize').innerText = size;
+            document.getElementById('summarySauce').innerText = sauces.join(', ') || 'None';
+            document.getElementById('summaryToppings').innerText = toppings.join(', ') || 'None';
+            document.getElementById('summaryOptions').innerText = options.join(', ') || 'None';
+
+            document.getElementById('orderSummary').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
